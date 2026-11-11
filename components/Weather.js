@@ -1,9 +1,9 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
-const LAT = process.env.NEXT_PUBLIC_LAT || '18.4667';
-const LON = process.env.NEXT_PUBLIC_LON || '83.65';
-const PLACE = process.env.NEXT_PUBLIC_PLACE || 'Rajam';
+const LAT = process.env.NEXT_PUBLIC_LAT || '18.65679228076837';
+const LON = process.env.NEXT_PUBLIC_LON || '84.38521646589057';
+const PLACE = process.env.NEXT_PUBLIC_PLACE || 'Pedamuraharipuram, Andhra Pradesh';
 
 // US AQI categories
 function aqiLabel(aqi) {

@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { supabase, SITE_NAME } from '../lib/supabase';
 import PostTile from '../components/PostTile';
-import PostCard from '../components/PostCard';
 
 const FILTERS = [
   ['all', 'All'],
@@ -12,31 +11,11 @@ const FILTERS = [
   ['blog', 'Blogs'],
 ];
 
-function Modal({ post, onClose }) {
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
-  }, [onClose]);
-
-  return (
-    <div className="overlay" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="modal" role="dialog" aria-modal="true" aria-label={post.title}>
-        <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
-        <PostCard post={post} />
-      </div>
-    </div>
-  );
-}
-
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const [settings, setSettings] = useState({});
   const [filter, setFilter] = useState('all');
   const [state, setState] = useState('loading');
-  const [open, setOpen] = useState(null);
 
   useEffect(() => {
     function load() {
@@ -88,11 +67,10 @@ export default function Home() {
           <p className="note">Nothing here yet. New posts will appear as soon as the admin publishes them.</p>
         )}
         <div className="grid">
-          {shown.map((p) => <PostTile key={p.id} post={p} onOpen={setOpen} />)}
+          {shown.map((p) => <PostTile key={p.id} post={p} />)}
         </div>
       </div>
 
-      {open && <Modal post={open} onClose={() => setOpen(null)} />}
     </>
   );
 }

@@ -1,9 +1,10 @@
+import Link from 'next/link';
 import { youtubeId } from '../lib/supabase';
 
 const LABELS = { update: 'Update', photo: 'Photo', video: 'Video', blog: 'Blog' };
 const COLORS = { update: '#f2a900', photo: '#8ed1b0', video: '#a9c4ff', blog: '#e4b8ff' };
 
-export default function PostTile({ post, onOpen }) {
+export default function PostTile({ post }) {
   const yt = post.type === 'video' ? youtubeId(post.media_url || '') : null;
   const date = new Date(post.created_at).toLocaleDateString('en-IN', {
     day: 'numeric', month: 'short', year: 'numeric',
@@ -29,7 +30,7 @@ export default function PostTile({ post, onOpen }) {
 
   return (
     <article className="tile">
-      <button type="button" className="tile-hit" onClick={() => onOpen(post)}>
+      <Link href={`/post/${post.id}`} className="tile-hit">
         {media
           ? <span className="tile-media">{media}</span>
           : <span className="tile-bar" style={{ background: COLORS[post.type] }} />}
@@ -43,7 +44,7 @@ export default function PostTile({ post, onOpen }) {
           {post.body && <span className="tile-excerpt">{post.body}</span>}
           <span className="tile-more">Read more →</span>
         </span>
-      </button>
+      </Link>
     </article>
   );
 }
